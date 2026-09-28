@@ -47,7 +47,7 @@ export default function RootLayout({
       <body>
         <script
           dangerouslySetInnerHTML={{
-            __html: `try{var t=localStorage.getItem("nexaerp-theme");document.documentElement.classList.toggle("light",t==="light")}catch(e){}`,
+            __html: `try{var t=localStorage.getItem("nexabooking-theme");document.documentElement.classList.toggle("light",t==="light")}catch(e){}`,
           }}
         />
         <div className="app-bg" aria-hidden />
