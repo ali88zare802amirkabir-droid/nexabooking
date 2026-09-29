@@ -32,46 +32,46 @@ export function formatMoney(value: number, currency = "$"): string {
   return `${currency}${Math.round(value).toLocaleString("en-US")}`;
 }
 
-/** deterministic relative label from raw minutes */
+/** deterministic relative label from raw minutes (Persian) */
 export function relMins(mins: number): string {
   const m = Math.max(0, Math.round(mins));
-  if (m < 1) return "just now";
-  if (m < 60) return `${m}m`;
+  if (m < 1) return "همین حالا";
+  if (m < 60) return `${m} دقیقه پیش`;
   const h = Math.floor(m / 60);
-  if (h < 24) return `${h}h`;
-  return `${Math.floor(h / 24)}d`;
+  if (h < 24) return `${h} ساعت پیش`;
+  return `${Math.floor(h / 24)} روز پیش`;
 }
 
-/** deterministic label from "days ago" */
+/** deterministic label from "days ago" (Persian) */
 export function relAgoDays(days: number): string {
-  if (days <= 0) return "today";
-  if (days === 1) return "yesterday";
-  return `${days}d ago`;
+  if (days <= 0) return "امروز";
+  if (days === 1) return "دیروز";
+  return `${days} روز پیش`;
 }
 
-/** deterministic label for "days from now" */
+/** deterministic label for "days from now" (Persian) */
 export function relInDays(days: number): string {
-  if (days <= 0) return `${Math.abs(days)}d overdue`;
-  if (days === 0) return "today";
-  if (days === 1) return "tomorrow";
-  return `in ${days}d`;
+  if (days <= 0) return `${Math.abs(days)} روز تأخیر`;
+  if (days === 0) return "امروز";
+  if (days === 1) return "فردا";
+  return `${days} روز آینده`;
 }
 
-/** deterministic tenure label from "days ago" */
+/** deterministic tenure label from "days ago" (Persian) */
 export function tenureLabel(days: number): string {
-  if (days <= 0) return "joined today";
-  if (days < 30) return `${days}d`;
-  if (days < 365) return `${Math.floor(days / 30)}m`;
+  if (days <= 0) return "از امروز";
+  if (days < 30) return `${days} روز`;
+  if (days < 365) return `${Math.floor(days / 30)} ماه`;
   const y = Math.floor(days / 365);
   const m = Math.floor((days % 365) / 30);
-  return m > 0 ? `${y}y ${m}m` : `${y}y`;
+  return m > 0 ? `${y} سال و ${m} ماه` : `${y} سال`;
 }
 
 export function greeting(): string {
   const hour = new Date().getHours();
-  if (hour < 12) return "Good morning";
-  if (hour < 17) return "Good afternoon";
-  return "Good evening";
+  if (hour < 12) return "صبح بخیر";
+  if (hour < 17) return "ظهر بخیر";
+  return "عصر بخیر";
 }
 
 export function uid(): string {

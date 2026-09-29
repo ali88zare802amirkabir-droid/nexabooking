@@ -4,7 +4,7 @@ import { useState, useMemo } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { appointments } from "@/data/appointments";
-import { STATUS_TONE } from "@/components/booking/meta";
+import { STATUS_TONE, APPT_STATUS_FA } from "@/components/booking/meta";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { PageHeader } from "@/components/layout/page-header";
@@ -12,6 +12,8 @@ import { Avatar } from "@/components/ui/avatar";
 
 const DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const DAY_SHORT = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const DAY_FA = ["یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنج‌شنبه", "جمعه", "شنبه"];
+const DAY_SHORT_FA = ["یک", "دو", "سه", "چهار", "پنج", "جمعه", "شنبه"];
 
 export default function CalendarPage() {
   const [view, setView] = useState<"day" | "week" | "month">("week");
@@ -53,12 +55,12 @@ export default function CalendarPage() {
   return (
     <div className="flex flex-col gap-6">
       <PageHeader
-        title="Calendar"
-        subtitle={`${weekDates[0]?.toLocaleDateString("en-US", { month: "short", day: "numeric" })} — ${weekDates[6]?.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}`}
+        title="تقویم"
+        subtitle={`${weekDates[0]?.toLocaleDateString("fa-IR", { month: "short", day: "numeric" })} — ${weekDates[6]?.toLocaleDateString("fa-IR", { month: "short", day: "numeric", year: "numeric" })}`}
         actions={
           <div className="flex items-center gap-2">
             {["day", "week", "month"].map((v) => (
-              <Button key={v} variant={view === v ? "primary" : "outline"} size="sm" onClick={() => setView(v as typeof view)} className="capitalize">{v}</Button>
+              <Button key={v} variant={view === v ? "primary" : "outline"} size="sm" onClick={() => setView(v as typeof view)} className="capitalize">{v === "day" ? "روز" : v === "week" ? "هفته" : "ماه"}</Button>
             ))}
           </div>
         }
@@ -67,22 +69,22 @@ export default function CalendarPage() {
       <div className="card overflow-hidden p-4">
         <div className="mb-4 flex items-center justify-between">
           <button type="button" onClick={view === "week" ? prevWeek : undefined} className="rounded-lg p-2 text-ink-2 hover:bg-surface-2">
-            <ChevronLeft className="size-5" />
+            <ChevronRight className="size-5" />
           </button>
           <h2 className="font-display text-lg font-bold text-ink">
-            {view === "week" && weekDates[0]?.toLocaleDateString("en-US", { month: "short", day: "numeric" })}
-            {view === "month" && date.toLocaleDateString("en-US", { month: "long", year: "numeric" })}
-            {view === "day" && date.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" })}
+            {view === "week" && weekDates[0]?.toLocaleDateString("fa-IR", { month: "short", day: "numeric" })}
+            {view === "month" && date.toLocaleDateString("fa-IR", { month: "long", year: "numeric" })}
+            {view === "day" && date.toLocaleDateString("fa-IR", { weekday: "long", month: "long", day: "numeric", year: "numeric" })}
           </h2>
           <button type="button" onClick={view === "week" ? nextWeek : undefined} className="rounded-lg p-2 text-ink-2 hover:bg-surface-2">
-            <ChevronRight className="size-5" />
+            <ChevronLeft className="size-5" />
           </button>
         </div>
 
         {view === "week" && (
           <>
             <div className="grid grid-cols-7 gap-px bg-edge">
-              {DAY_SHORT.map((d) => (
+              {DAY_SHORT_FA.map((d) => (
                 <div key={d} className="bg-bg-soft p-2 text-center text-[11px] font-semibold text-ink-3">{d}</div>
               ))}
             </div>
@@ -98,7 +100,7 @@ export default function CalendarPage() {
                         {a.startTime} {a.customerId}
                       </Link>
                     ))}
-                    {dayAppts.length > 3 && <p className="text-[10px] text-ink-3">+{dayAppts.length - 3} more</p>}
+                    {dayAppts.length > 3 && <p className="text-[10px] text-ink-3">+{dayAppts.length - 3} بیشتر</p>}
                   </div>
                 );
               })}
@@ -108,7 +110,7 @@ export default function CalendarPage() {
 
         {view === "month" && (
           <div className="grid grid-cols-7 gap-px bg-edge">
-            {DAY_SHORT.map((d) => (
+            {DAY_SHORT_FA.map((d) => (
               <div key={d} className="bg-bg-soft p-2 text-center text-[11px] font-semibold text-ink-3">{d}</div>
             ))}
             {monthDays.map((d, i) => {
@@ -142,7 +144,7 @@ export default function CalendarPage() {
                         {a.customerId} — {a.serviceId}
                       </Link>
                     ))}
-                    {dayAppts.length === 0 && <span className="text-[11px] text-ink-3/50">Available</span>}
+                    {dayAppts.length === 0 && <span className="text-[11px] text-ink-3/50">در دسترس</span>}
                   </div>
                 </div>
               );

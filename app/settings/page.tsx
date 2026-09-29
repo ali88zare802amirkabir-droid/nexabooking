@@ -18,31 +18,31 @@ export default function SettingsPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <PageHeader title="Settings" subtitle="Manage your booking platform" />
+      <PageHeader title="تنظیمات" subtitle="مدیریت پلتفرم رزرو" />
 
       <div className="grid gap-6 lg:grid-cols-2">
         {/* Business Profile */}
         <div className="card p-5">
-          <h2 className="mb-4 font-display text-base font-bold text-ink">Business Profile</h2>
+          <h2 className="mb-4 font-display text-base font-bold text-ink">مشخصات کسب‌وکار</h2>
           <div className="flex flex-col gap-3">
             <label className="flex flex-col gap-1.5 text-[12px] font-medium text-ink-2">
-              Business Name
+              نام کسب‌وکار
               <TextInput value={settings.businessName} onChange={(e) => updateSettings({ businessName: e.target.value })} />
             </label>
             <label className="flex flex-col gap-1.5 text-[12px] font-medium text-ink-2">
-              Email
+              ایمیل
               <TextInput type="email" value={settings.businessEmail} onChange={(e) => updateSettings({ businessEmail: e.target.value })} />
             </label>
             <label className="flex flex-col gap-1.5 text-[12px] font-medium text-ink-2">
-              Phone
+              تلفن
               <TextInput value={settings.businessPhone} onChange={(e) => updateSettings({ businessPhone: e.target.value })} />
             </label>
             <label className="flex flex-col gap-1.5 text-[12px] font-medium text-ink-2">
-              Address
+              نشانی
               <TextInput value={settings.businessAddress} onChange={(e) => updateSettings({ businessAddress: e.target.value })} />
             </label>
             <Select value={settings.timezone} onChange={(e) => updateSettings({ timezone: e.target.value })}>
-              {["America/New_York", "America/Chicago", "America/Los_Angeles", "Europe/London"].map((t) => (
+              {["America/New_York", "America/Chicago", "America/Los_Angeles", "Europe/London", "Asia/Tehran"].map((t) => (
                 <option key={t} value={t}>{t}</option>
               ))}
             </Select>
@@ -51,32 +51,32 @@ export default function SettingsPage() {
 
         {/* Appearance */}
         <div className="card p-5">
-          <h2 className="mb-4 font-display text-base font-bold text-ink">Appearance</h2>
+          <h2 className="mb-4 font-display text-base font-bold text-ink">ظاهر</h2>
           <div className="flex flex-col gap-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-[13px] font-medium text-ink">Dark / Light Theme</p>
-                <p className="text-[11.5px] text-ink-3">Toggle between themes</p>
+                <p className="text-[13px] font-medium text-ink">حالت تاریک / روشن</p>
+                <p className="text-[11.5px] text-ink-3">تغییر بین تم‌ها</p>
               </div>
-              <button type="button" onClick={() => { document.documentElement.classList.toggle("light"); localStorage.setItem("nexabooking-theme", document.documentElement.classList.contains("light") ? "light" : ""); }} className="h-8 w-12 rounded-full bg-accent relative transition-colors" aria-label="Toggle theme">
-                <span className="absolute top-1 left-1 h-6 w-6 rounded-full bg-white shadow transition-transform" />
+              <button type="button" onClick={() => { document.documentElement.classList.toggle("light"); localStorage.setItem("nexabooking-theme", document.documentElement.classList.contains("light") ? "light" : ""); }} className="h-8 w-12 rounded-full bg-accent relative transition-colors" aria-label="تغییر تم">
+                <span className="absolute top-1 right-1 h-6 w-6 rounded-full bg-white shadow transition-transform" />
               </button>
             </div>
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-[13px] font-medium text-ink">Compact Density</p>
-                <p className="text-[11.5px] text-ink-3">Reduce spacing</p>
+                <p className="text-[13px] font-medium text-ink">تراکم متراکم</p>
+                <p className="text-[11.5px] text-ink-3">کاهش فاصله‌ها</p>
               </div>
-              <button type="button" onClick={() => updateSettings({ density: !settings.density })} className={cn("h-8 w-12 rounded-full transition-colors", settings.density ? "bg-accent" : "bg-surface-2")} aria-label="Toggle density">
+              <button type="button" onClick={() => updateSettings({ density: !settings.density })} className={cn("h-8 w-12 rounded-full transition-colors", settings.density ? "bg-accent" : "bg-surface-2")} aria-label="تغییر تراکم">
                 <span className={cn("h-6 w-6 rounded-full bg-white shadow transition-transform", settings.density ? "translate-x-4" : "translate-x-1")} />
               </button>
             </div>
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-[13px] font-medium text-ink">Reduce Motion</p>
-                <p className="text-[11.5px] text-ink-3">Minimize animations</p>
+                <p className="text-[13px] font-medium text-ink">کاهش حرکت</p>
+                <p className="text-[11.5px] text-ink-3">بهینه‌سازی انیمیشن‌ها</p>
               </div>
-              <button type="button" onClick={() => updateSettings({ reduceMotion: !settings.reduceMotion })} className={cn("h-8 w-12 rounded-full transition-colors", settings.reduceMotion ? "bg-accent" : "bg-surface-2")} aria-label="Toggle motion">
+              <button type="button" onClick={() => updateSettings({ reduceMotion: !settings.reduceMotion })} className={cn("h-8 w-12 rounded-full transition-colors", settings.reduceMotion ? "bg-accent" : "bg-surface-2")} aria-label="تغییر حرکت">
                 <span className={cn("h-6 w-6 rounded-full bg-white shadow transition-transform", settings.reduceMotion ? "translate-x-4" : "translate-x-1")} />
               </button>
             </div>
@@ -85,12 +85,12 @@ export default function SettingsPage() {
 
         {/* Notifications */}
         <div className="card p-5">
-          <h2 className="mb-4 font-display text-base font-bold text-ink">Notifications</h2>
+          <h2 className="mb-4 font-display text-base font-bold text-ink">اعلان‌ها</h2>
           <div className="flex flex-col gap-4">
             {[
-              { key: "notifAppointments", label: "Appointment Reminders", desc: "Get notified before appointments" },
-              { key: "notifPayments", label: "Payment Notifications", desc: "When payments are received" },
-              { key: "notifStaff", label: "Staff Notifications", desc: "Schedule changes and updates" },
+              { key: "notifAppointments", label: "یادآوری نوبت‌ها", desc: "اعلان قبل از نوبت‌ها" },
+              { key: "notifPayments", label: "اعلان پرداخت‌ها", desc: "هنگام دریافت پرداخت" },
+              { key: "notifStaff", label: "اعلان کارکنان", desc: "تغییرات برنامه و بروزرسانی‌ها" },
             ].map((n) => (
               <div key={n.key} className="flex items-center justify-between">
                 <div>
@@ -107,18 +107,18 @@ export default function SettingsPage() {
 
         {/* Booking Settings */}
         <div className="card p-5">
-          <h2 className="mb-4 font-display text-base font-bold text-ink">Booking Settings</h2>
+          <h2 className="mb-4 font-display text-base font-bold text-ink">تنظیمات رزرو</h2>
           <div className="flex flex-col gap-3">
             <label className="flex flex-col gap-1.5 text-[12px] font-medium text-ink-2">
-              Default Duration (min)
+              مدت پیش‌فرض (دقیقه)
               <TextInput type="number" value={settings.defaultDuration} onChange={(e) => updateSettings({ defaultDuration: Number(e.target.value) })} />
             </label>
             <label className="flex flex-col gap-1.5 text-[12px] font-medium text-ink-2">
-              Cancellation Window (hours)
+              مهلت لغو (ساعت)
               <TextInput type="number" value={settings.cancellationWindow} onChange={(e) => updateSettings({ cancellationWindow: Number(e.target.value) })} />
             </label>
             <label className="flex flex-col gap-1.5 text-[12px] font-medium text-ink-2">
-              Buffer Time (min)
+              زمان حائل (دقیقه)
               <TextInput type="number" value={settings.bufferTime} onChange={(e) => updateSettings({ bufferTime: Number(e.target.value) })} />
             </label>
           </div>
@@ -126,12 +126,12 @@ export default function SettingsPage() {
       </div>
 
       {saved && (
-        <div className="fixed bottom-4 right-4 rounded-xl bg-ok/90 px-4 py-2 text-sm font-semibold text-white shadow-lg">
-          Settings saved!
+        <div className="fixed bottom-4 left-4 rounded-xl bg-ok/90 px-4 py-2 text-sm font-semibold text-white shadow-lg">
+          تنظیمات ذخیره شد!
         </div>
       )}
       <div className="mt-4 flex justify-end">
-        <Button onClick={save}>Save Settings</Button>
+        <Button onClick={save}>ذخیره تنظیمات</Button>
       </div>
     </div>
   );

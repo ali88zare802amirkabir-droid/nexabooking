@@ -13,7 +13,7 @@ const VARIANTS = {
 export function Toasts() {
   const { toasts, dismissToast } = useApp();
   return (
-    <div className="pointer-events-none fixed bottom-4 right-4 z-[60] flex w-[calc(100vw-2rem)] max-w-sm flex-col gap-2">
+    <div className="pointer-events-none fixed bottom-4 left-4 z-[60] flex w-[calc(100vw-2rem)] max-w-sm flex-col gap-2">
       {toasts.map((t) => {
         const v = VARIANTS[t.variant];
         const Icon = v.icon;
@@ -31,7 +31,7 @@ export function Toasts() {
             <button
               type="button"
               onClick={() => dismissToast(t.id ?? "")}
-              aria-label="Dismiss notification"
+              aria-label="بستن اعلان"
               className="rounded-md p-1 text-ink-3 hover:bg-surface-2 hover:text-ink"
             >
               <X className="size-3.5" />

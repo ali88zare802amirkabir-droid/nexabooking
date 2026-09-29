@@ -30,3 +30,62 @@ export const SERVICE_TONE: Record<string, { cls: string }> = {
   Active: { cls: "bg-[#4ade80]/10 text-[#4ade80]" },
   Inactive: { cls: "bg-[#94a3b8]/10 text-[#94a3b8]" },
 };
+
+/** Persian display labels. Data enum keys stay English — always render via these maps. */
+export const APPT_STATUS_FA: Record<ApptStatus, string> = {
+  Confirmed: "تأییدشده",
+  Pending: "در انتظار",
+  Completed: "تکمیل‌شده",
+  Cancelled: "لغوشده",
+  "No-show": "عدم حضور",
+};
+
+export const CUSTOMER_STATUS_FA: Record<string, string> = {
+  Active: "فعال",
+  New: "جدید",
+  Inactive: "غیرفعال",
+  VIP: "ویژه",
+};
+
+export const PAYMENT_STATUS_FA: Record<string, string> = {
+  Paid: "پرداخت‌شده",
+  Pending: "در انتظار",
+  Refunded: "مستردشده",
+};
+
+export const PAYMENT_METHOD_FA: Record<string, string> = {
+  Card: "کارت",
+  Cash: "نقدی",
+  Transfer: "حواله",
+};
+
+export const STAFF_STATUS_FA: Record<string, string> = {
+  Available: "در دسترس",
+  Off: "تعطیل",
+  "On Leave": "مرخصی",
+};
+
+export const SERVICE_STATUS_FA: Record<string, string> = {
+  Active: "فعال",
+  Inactive: "غیرفعال",
+};
+
+export const DAY_FA: Record<string, string> = {
+  Monday: "دوشنبه",
+  Tuesday: "سه‌شنبه",
+  Wednesday: "چهارشنبه",
+  Thursday: "پنجشنبه",
+  Friday: "جمعه",
+  Saturday: "شنبه",
+  Sunday: "یکشنبه",
+};
+
+export const CATEGORY_FA: Record<string, string> = {
+  Hair: "مو",
+  Beauty: "زیبایی",
+  Medical: "پزشکی",
+  Fitness: "تناسب اندام",
+  Repair: "تعمیرات",
+  Consulting: "مشاوره",
+  Wellness: "تندرستی",
+};

@@ -5,6 +5,7 @@ import { PageHeader } from "@/components/layout/page-header";
 import { availability, DAYS } from "@/data/availability";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { DAY_FA } from "@/components/booking/meta";
 
 export default function AvailabilityPage() {
   const [avail, setAvail] = useState(availability);
@@ -25,7 +26,7 @@ export default function AvailabilityPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <PageHeader title="Availability" subtitle="Weekly schedule — click to toggle days" />
+      <PageHeader title="ساعات کاری" subtitle="برنامه هفتگی — برای تغییر روز کلیک کنید" />
 
       <div className="card p-5">
         <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
@@ -34,9 +35,9 @@ export default function AvailabilityPage() {
             return (
               <div key={day} className={cn("rounded-xl border border-edge p-4", d.off && "opacity-60")}>
                 <div className="flex items-center justify-between">
-                  <h3 className="font-semibold text-ink">{day}</h3>
+                  <h3 className="font-semibold text-ink">{DAY_FA[day] ?? day}</h3>
                   <button type="button" onClick={() => toggleDay(day)} className={cn("rounded-full px-3 py-1 text-[11px] font-semibold", d.off ? "bg-red-500/10 text-red-400" : "bg-green-500/10 text-green-400")}>
-                    {d.off ? "Off" : "Active"}
+                    {d.off ? "تعطیل" : "فعال"}
                   </button>
                 </div>
                 {!d.off && (
@@ -46,7 +47,7 @@ export default function AvailabilityPage() {
                     <input type="time" value={d.end} onChange={(e) => updateTime(day, "end", e.target.value)} className="rounded-lg border border-edge bg-surface px-2 py-1 text-[12px] text-ink focus:outline-none" />
                   </div>
                 )}
-                {d.off && <p className="mt-2 text-[12px] text-ink-3">Closed</p>}
+                {d.off && <p className="mt-2 text-[12px] text-ink-3">بسته</p>}
               </div>
             );
           })}

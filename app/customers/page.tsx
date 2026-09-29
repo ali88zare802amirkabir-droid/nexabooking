@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useApp } from "@/lib/store";
 import { customers } from "@/data/customers";
 import { formatMoney } from "@/lib/utils";
-import { CUSTOMER_TONE } from "@/components/booking/meta";
+import { CUSTOMER_TONE, CUSTOMER_STATUS_FA } from "@/components/booking/meta";
 import { Button } from "@/components/ui/button";
 import { Select, TextInput } from "@/components/ui/input";
 import { PageHeader } from "@/components/layout/page-header";
@@ -38,41 +38,41 @@ export default function CustomersPage() {
   const addDummy = () => {
     addCustomer({
       id: `c-${Math.random().toString(36).slice(2, 8)}`,
-      name: "New Customer",
+      name: "مشتری جدید",
       email: "new@mail.com",
-      phone: "+1 (000) 000-0000",
+      phone: "+۹۸ (۰۲۱) ۰۰۰-۰۰۰۰",
       avatarColor: "#55a1ff",
       status: "New",
       sinceDaysAgo: 0,
       totalAppointments: 0,
       totalSpent: 0,
     });
-    showToast({ title: "Customer added", variant: "success" });
+    showToast({ title: "مشتری افزوده شد", variant: "success" });
   };
 
-  return (
+return (
     <div className="flex flex-col gap-6">
       <PageHeader
-        title="Customers"
-        subtitle={`${filtered.length} customers`}
+        title="مشتریان"
+        subtitle={`${filtered.length} مشتری`}
         actions={
-          <Button size="sm" onClick={addDummy}><Plus className="mr-1.5 size-4" /> Add Customer</Button>
+          <Button size="sm" onClick={addDummy}><Plus className="ms-1.5 size-4" /> افزودن مشتری</Button>
         }
       />
 
       <div className="flex flex-wrap items-center gap-3">
         <div className="relative flex-1 min-w-[200px]">
-          <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-ink-3" />
-          <TextInput placeholder="Search customers…" value={search} onChange={(e) => setSearch(e.target.value)} className="pl-9" />
+          <Search className="absolute right-3 top-1/2 size-4 -translate-y-1/2 text-ink-3" />
+          <TextInput placeholder="جستجوی مشتریان…" value={search} onChange={(e) => setSearch(e.target.value)} className="pr-9" />
         </div>
         <Select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
-          <option value="">All Statuses</option>
-          {["Active", "New", "Inactive"].map((s) => <option key={s} value={s}>{s}</option>)}
+          <option value="">همه وضعیت‌ها</option>
+          {["Active", "New", "Inactive", "VIP"].map((s) => <option key={s} value={s}>{CUSTOMER_STATUS_FA[s] ?? s}</option>)}
         </Select>
         <Select value={sortBy} onChange={(e) => setSortBy(e.target.value as typeof sortBy)}>
-          <option value="name">Sort: Name</option>
-          <option value="visits">Sort: Visits</option>
-          <option value="spent">Sort: Spent</option>
+          <option value="name">مرتب‌سازی: نام</option>
+          <option value="visits">مرتب‌سازی: بازدیدها</option>
+          <option value="spent">مرتب‌سازی: هزینه</option>
         </Select>
       </div>
 
@@ -81,8 +81,8 @@ export default function CustomersPage() {
           <table className="w-full text-[13px]">
             <thead>
               <tr className="border-b border-edge">
-                {["Customer", "Contact", "Visits", "Last Visit", "Next Appt", "Spent", "Status"].map((h) => (
-                  <th key={h} className="px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wide text-ink-3">{h}</th>
+                {["مشتری", "تماس", "بازدیدها", "آخرین بازدید", "نوبت بعد", "هزینه", "وضعیت"].map((h) => (
+                  <th key={h} className="px-4 py-3 text-right text-[11px] font-semibold uppercase tracking-wide text-ink-3">{h}</th>
                 ))}
               </tr>
             </thead>
@@ -95,17 +95,17 @@ export default function CustomersPage() {
                     <p className="text-[11.5px] text-ink-3">{c.email}</p>
                   </div>
                   <span className="text-ink-2">{c.totalAppointments}</span>
-                  <span className="hidden text-ink-2 sm:inline">{c.sinceDaysAgo}d ago</span>
+                  <span className="hidden text-ink-2 sm:inline">{c.sinceDaysAgo} روز پیش</span>
                   <span className="hidden text-ink-2 sm:inline">—</span>
                   <span className="font-medium text-ink-2">{formatMoney(c.totalSpent)}</span>
-                  <span className={cn("rounded-full px-2 py-0.5 text-[10.5px] font-semibold", CUSTOMER_TONE[c.status]?.cls)}>{c.status}</span>
+                  <span className={cn("rounded-full px-2 py-0.5 text-[10.5px] font-semibold", CUSTOMER_TONE[c.status]?.cls)}>{CUSTOMER_STATUS_FA[c.status] ?? c.status}</span>
                 </Link>
               ))}
             </tbody>
           </table>
         </div>
         {filtered.length === 0 && (
-          <div className="px-4 py-10 text-center text-[12.5px] text-ink-3">No customers found.</div>
+          <div className="px-4 py-10 text-center text-[12.5px] text-ink-3">مشتری یافت نشد.</div>
         )}
       </div>
     </div>

@@ -3,7 +3,7 @@
 import { staff } from "@/data/staff";
 import { appointments } from "@/data/appointments";
 import { formatMoney } from "@/lib/utils";
-import { STAFF_TONE } from "@/components/booking/meta";
+import { STAFF_TONE, STAFF_STATUS_FA, APPT_STATUS_FA, DAY_FA, CATEGORY_FA } from "@/components/booking/meta";
 import { Avatar } from "@/components/ui/avatar";
 import { PageHeader } from "@/components/layout/page-header";
 import { Button } from "@/components/ui/button";
@@ -27,16 +27,16 @@ export default async function StaffDetailPage({ params }: { params: Promise<{ id
       <PageHeader title={s.name} subtitle={s.role}>
         <div className="flex items-center gap-3">
           <Avatar name={s.name} color={s.avatarColor} size="xl" />
-          <span className={cn("rounded-full px-2.5 py-1 text-[11px] font-semibold", STAFF_TONE[s.status]?.cls)}>{s.status}</span>
+          <span className={cn("rounded-full px-2.5 py-1 text-[11px] font-semibold", STAFF_TONE[s.status]?.cls)}>{STAFF_STATUS_FA[s.status] ?? s.status}</span>
         </div>
       </PageHeader>
 
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
         {[
-          { label: "Department", value: s.department },
-          { label: "Today", value: `${s.appointmentsToday} apps` },
-          { label: "Completed", value: completed.toString() },
-          { label: "Revenue", value: formatMoney(revenue) },
+          { label: "بخش", value: CATEGORY_FA[s.department] ?? s.department },
+          { label: "امروز", value: `${s.appointmentsToday} نوبت` },
+          { label: "تکمیل‌شده", value: completed.toString() },
+          { label: "درآمد", value: formatMoney(revenue) },
         ].map((k) => (
           <div key={k.label} className="card p-4">
             <p className="text-[11.5px] text-ink-3">{k.label}</p>
@@ -46,13 +46,13 @@ export default async function StaffDetailPage({ params }: { params: Promise<{ id
       </div>
 
       <div className="card p-5">
-        <h2 className="mb-4 font-display text-base font-bold text-ink">Working Hours</h2>
+        <h2 className="mb-4 font-display text-base font-bold text-ink">ساعات کاری</h2>
         <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
           {Object.entries(s.workingHours).map(([day, hours]) => (
             <div key={day} className={cn("rounded-xl border border-edge p-3", hours.off && "opacity-60")}>
-              <p className="font-medium text-ink">{day}</p>
+              <p className="font-medium text-ink">{DAY_FA[day] ?? day}</p>
               {hours.off ? (
-                <p className="text-[12px] text-ink-3">Off</p>
+                <p className="text-[12px] text-ink-3">تعطیل</p>
               ) : (
                 <p className="text-[12px] text-ink-2">{hours.start} — {hours.end}</p>
               )}
@@ -62,9 +62,9 @@ export default async function StaffDetailPage({ params }: { params: Promise<{ id
       </div>
 
       <div className="card p-5">
-        <h2 className="mb-4 font-display text-base font-bold text-ink">Upcoming</h2>
+        <h2 className="mb-4 font-display text-base font-bold text-ink">نوبت‌های آتی</h2>
         {upcoming.length === 0 ? (
-          <p className="py-4 text-center text-[12.5px] text-ink-3">No upcoming appointments.</p>
+          <p className="py-4 text-center text-[12.5px] text-ink-3">نوبت آتی وجود ندارد.</p>
         ) : (
           <div className="flex flex-col gap-2">
             {upcoming.map((a) => (

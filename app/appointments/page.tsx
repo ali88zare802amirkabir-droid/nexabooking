@@ -9,7 +9,7 @@ import { customers } from "@/data/customers";
 import { services } from "@/data/services";
 import { staff } from "@/data/staff";
 import { formatMoney } from "@/lib/utils";
-import { STATUS_TONE } from "@/components/booking/meta";
+import { STATUS_TONE, APPT_STATUS_FA } from "@/components/booking/meta";
 import { Button } from "@/components/ui/button";
 import { Select, TextInput } from "@/components/ui/input";
 import { PageHeader } from "@/components/layout/page-header";
@@ -51,28 +51,28 @@ export default function AppointmentsPage() {
   return (
     <div className="flex flex-col gap-6">
       <PageHeader
-        title="Appointments"
-        subtitle={`${filtered.length} appointments`}
+        title="نوبت‌ها"
+        subtitle={`${filtered.length} نوبت`}
         actions={
-          <Button size="sm"><Plus className="mr-1.5 size-4" /> New</Button>
+          <Button size="sm"><Plus className="ms-1.5 size-4" /> جدید</Button>
         }
       />
 
       <div className="flex flex-wrap items-center gap-3">
         <div className="relative flex-1 min-w-[200px]">
-          <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-ink-3" />
-          <TextInput placeholder="Search customers, services…" value={search} onChange={(e) => setSearch(e.target.value)} className="pl-9" />
+          <Search className="absolute right-3 top-1/2 size-4 -translate-y-1/2 text-ink-3" />
+          <TextInput placeholder="جستجوی مشتریان، خدمات…" value={search} onChange={(e) => setSearch(e.target.value)} className="pr-9" />
         </div>
         <Select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
-          <option value="">All Statuses</option>
-          {STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
+          <option value="">همه وضعیت‌ها</option>
+          {STATUSES.map((s) => <option key={s} value={s}>{APPT_STATUS_FA[s] ?? s}</option>)}
         </Select>
         <Select value={staffFilter} onChange={(e) => setStaffFilter(e.target.value)}>
-          <option value="">All Staff</option>
+          <option value="">همه کارکنان</option>
           {staff.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
         </Select>
         <Select value={serviceFilter} onChange={(e) => setServiceFilter(e.target.value)}>
-          <option value="">All Services</option>
+          <option value="">همه خدمات</option>
           {services.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
         </Select>
       </div>
@@ -82,8 +82,8 @@ export default function AppointmentsPage() {
           <table className="w-full text-[13px]">
             <thead>
               <tr className="border-b border-edge">
-                {["Customer", "Service", "Staff", "Date", "Time", "Status", "Payment", "Actions"].map((h) => (
-                  <th key={h} className="px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wide text-ink-3">{h}</th>
+                {["مشتری", "خدمت", "کارمند", "تاریخ", "ساعت", "وضعیت", "پرداخت", "عملیات"].map((h) => (
+                  <th key={h} className="px-4 py-3 text-right text-[11px] font-semibold uppercase tracking-wide text-ink-3">{h}</th>
                 ))}
               </tr>
             </thead>
@@ -105,10 +105,10 @@ export default function AppointmentsPage() {
                     <td className="px-4 py-3 text-ink-2">{st?.name ?? "—"}</td>
                     <td className="px-4 py-3 text-ink-2">{a.date}</td>
                     <td className="px-4 py-3 text-ink-2 font-mono">{a.startTime}</td>
-                    <td className="px-4 py-3"><span className={cn("rounded-full px-2 py-0.5 text-[10.5px] font-semibold", STATUS_TONE[a.status]?.cls)}>{a.status}</span></td>
+                    <td className="px-4 py-3"><span className={cn("rounded-full px-2 py-0.5 text-[10.5px] font-semibold", STATUS_TONE[a.status]?.cls)}>{APPT_STATUS_FA[a.status] ?? a.status}</span></td>
                     <td className="px-4 py-3 text-ink-2">{formatMoney(pay.amount)}</td>
                     <td className="px-4 py-3">
-                      <Link href={`/appointments/${a.id}`} className="text-accent hover:underline text-[12px]">View</Link>
+                      <Link href={`/appointments/${a.id}`} className="text-accent hover:underline text-[12px]">مشاهده</Link>
                     </td>
                   </tr>
                 );
@@ -117,7 +117,7 @@ export default function AppointmentsPage() {
           </table>
         </div>
         {filtered.length === 0 && (
-          <div className="px-4 py-10 text-center text-[12.5px] text-ink-3">No appointments found.</div>
+          <div className="px-4 py-10 text-center text-[12.5px] text-ink-3">نوبتی یافت نشد.</div>
         )}
       </div>
     </div>

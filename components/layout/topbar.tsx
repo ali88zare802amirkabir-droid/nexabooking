@@ -35,7 +35,7 @@ export function Topbar() {
       <button
         type="button"
         onClick={() => setMobileNavOpen(true)}
-        aria-label="Open navigation"
+        aria-label="باز کردن ناوبری"
         className="rounded-lg p-2 text-ink-2 hover:bg-surface-2 hover:text-ink lg:hidden"
       >
         <Menu className="size-4.5" />
@@ -43,7 +43,7 @@ export function Topbar() {
       <button
         type="button"
         onClick={toggleSidebar}
-        aria-label={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+        aria-label={sidebarCollapsed ? "باز کردن نوار کناری" : "بستن نوار کناری"}
         className="hidden rounded-lg p-2 text-ink-2 transition-colors hover:bg-surface-2 hover:text-ink lg:inline-flex"
       >
         <PanelLeft className="size-4.5" />
@@ -59,10 +59,10 @@ export function Topbar() {
           type="button"
           onClick={() => setSearchOpen(true)}
           className="flex h-9 items-center gap-2 rounded-xl border border-edge bg-surface/60 px-3 text-[12.5px] text-ink-3 transition-colors hover:border-edge-strong hover:text-ink-2"
-          aria-label="Search workspace"
+          aria-label="جستجو در محیط کار"
         >
           <Search className="size-3.5" />
-          <span className="hidden md:inline">Search…</span>
+          <span className="hidden md:inline">جستجو…</span>
           <kbd className="hidden rounded border border-edge bg-surface-2 px-1.5 py-0.5 text-[10px] font-medium text-ink-3 sm:inline">
             ⌘K
           </kbd>
@@ -72,7 +72,7 @@ export function Topbar() {
           <button
             type="button"
             onClick={() => setNotifOpen((v) => !v)}
-            aria-label={`Notifications${unread ? `, ${unread} unread` : ""}`}
+            aria-label={`اعلان‌ها${unread ? `، ${unread} خوانده‌نشده` : ""}`}
             className="relative flex size-9 items-center justify-center rounded-xl text-ink-2 transition-colors hover:bg-surface-2 hover:text-ink"
           >
             <Bell className="size-4.5" />
@@ -91,14 +91,14 @@ export function Topbar() {
         <Link
           href="/settings"
           className="flex h-9 items-center gap-2 rounded-xl p-1 pl-1.5 pr-2 transition-colors hover:bg-surface-2"
-          aria-label="Open settings"
+          aria-label="باز کردن تنظیمات"
         >
           <span className="flex size-6.5 items-center justify-center rounded-lg bg-accent-soft text-[11px] font-bold text-accent">
             {profile.name.slice(0, 2).toUpperCase() || "AR"}
           </span>
-          <span className="hidden text-[12.5px] font-semibold text-ink sm:inline">
-            {profile.name.split(" ")[0] || "Ali"}
-          </span>
+<span className="hidden text-[12.5px] font-semibold text-ink sm:inline">
+              {profile.name.split(" ")[0] || "علی"}
+            </span>
         </Link>
       </div>
     </header>

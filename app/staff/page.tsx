@@ -6,7 +6,7 @@ import { useApp } from "@/lib/store";
 import { staff } from "@/data/staff";
 import { appointments } from "@/data/appointments";
 import { formatMoney } from "@/lib/utils";
-import { STAFF_TONE } from "@/components/booking/meta";
+import { STAFF_TONE, STAFF_STATUS_FA, CATEGORY_FA } from "@/components/booking/meta";
 import { Button } from "@/components/ui/button";
 import { Select, TextInput } from "@/components/ui/input";
 import { PageHeader } from "@/components/layout/page-header";
@@ -27,21 +27,21 @@ export default function StaffPage() {
   return (
     <div className="flex flex-col gap-6">
       <PageHeader
-        title="Staff"
-        subtitle={`${filtered.length} members`}
+        title="کارکنان"
+        subtitle={`${filtered.length} عضو`}
         actions={
-          <Button size="sm"><Plus className="mr-1.5 size-4" /> Add Staff</Button>
+          <Button size="sm"><Plus className="ms-1.5 size-4" /> افزودن کارمند</Button>
         }
       />
 
       <div className="flex flex-wrap items-center gap-3">
         <div className="relative flex-1 min-w-[200px]">
-          <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-ink-3" />
-          <TextInput placeholder="Search staff…" value={search} onChange={(e) => setSearch(e.target.value)} className="pl-9" />
+          <Search className="absolute right-3 top-1/2 size-4 -translate-y-1/2 text-ink-3" />
+          <TextInput placeholder="جستجوی کارکنان…" value={search} onChange={(e) => setSearch(e.target.value)} className="pr-9" />
         </div>
         <Select value={deptFilter} onChange={(e) => setDeptFilter(e.target.value)}>
-          <option value="">All Departments</option>
-          {["Hair", "Beauty", "Medical", "Fitness", "Repair", "Consulting", "Wellness"].map((d) => <option key={d} value={d}>{d}</option>)}
+          <option value="">همه بخش‌ها</option>
+          {["Hair", "Beauty", "Medical", "Fitness", "Repair", "Consulting", "Wellness"].map((d) => <option key={d} value={d}>{CATEGORY_FA[d] ?? d}</option>)}
         </Select>
       </div>
 
@@ -58,10 +58,10 @@ export default function StaffPage() {
                 </div>
               </div>
               <div className="mt-3 flex items-center justify-between">
-                <span className={cn("rounded-full px-2 py-0.5 text-[10.5px] font-semibold", STAFF_TONE[s.status]?.cls)}>{s.status}</span>
-                <span className="text-[12px] text-ink-2">{s.appointmentsToday} today</span>
+                <span className={cn("rounded-full px-2 py-0.5 text-[10.5px] font-semibold", STAFF_TONE[s.status]?.cls)}>{STAFF_STATUS_FA[s.status] ?? s.status}</span>
+                <span className="text-[12px] text-ink-2">{todays} امروز</span>
               </div>
-              <div className="mt-2 text-[11.5px] text-ink-3">{s.department} · {s.services.length} services</div>
+              <div className="mt-2 text-[11.5px] text-ink-3">{CATEGORY_FA[s.department] ?? s.department} · {s.services.length} خدمت</div>
             </Link>
           );
         })}

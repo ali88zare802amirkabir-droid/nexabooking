@@ -40,7 +40,7 @@ interface Store {
   paymentData: Payment[];
   products: Service[];
   invoices: Payment[];
-  projects: any[];
+  projects: unknown[];
   money: (n: number) => string;
   settings: AppSettings;
   updateSettings: (s: Partial<AppSettings>) => void;
@@ -110,12 +110,12 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
 
   const cancelAppointment = useCallback((id: string) => {
     setAppointmentData((prev) => prev.map((a) => (a.id === id ? { ...a, status: "Cancelled" as ApptStatus } : a)));
-    showToast({ title: "Appointment cancelled", variant: "info" });
+    showToast({ title: "نوبت لغو شد", variant: "info" });
   }, [showToast]);
 
   const markCompleted = useCallback((id: string) => {
     setAppointmentData((prev) => prev.map((a) => (a.id === id ? { ...a, status: "Completed" as ApptStatus } : a)));
-    showToast({ title: "Marked as completed", variant: "success" });
+    showToast({ title: "تکمیل شد", variant: "success" });
   }, [showToast]);
 
   const markNotificationRead = useCallback((id: string) => {
@@ -148,7 +148,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     mobileNavOpen, setMobileNavOpen,
     toast: toasts[0] ?? null, toasts, showToast, dismissToast,
     searchOpen, setSearchOpen, notificationsOpen, setNotificationsOpen,
-    profile: { name: "Ali Rezaei", role: "Admin" },
+    profile: { name: "علی رضایی", role: "مدیر" },
     notifications: notificationData,
     markNotificationRead, markAllNotificationsRead,
     staffData, employees: staffData,

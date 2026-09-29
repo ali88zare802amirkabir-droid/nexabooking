@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { ArrowLeft } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useApp } from "@/lib/store";
 import { BrandMark, NavLinks, WorkspaceChip } from "@/components/layout/sidebar";
 
@@ -25,16 +25,16 @@ export function MobileNav({ open, onClose }: { open: boolean; onClose: () => voi
   return (
     <div className="fixed inset-0 z-40 lg:hidden">
       <div className="animate-fade-in absolute inset-0 bg-black/60 backdrop-blur-[2px]" onClick={onClose} aria-hidden />
-      <div className="animate-drawer-in absolute inset-y-0 left-0 flex w-[280px] flex-col border-r border-edge bg-bg-soft">
+      <div className="animate-drawer-in absolute inset-y-0 right-0 flex w-[280px] flex-col border-r border-edge bg-bg-soft">
         <div className="flex items-center justify-between pr-3">
           <BrandMark />
           <button
             type="button"
             onClick={onClose}
-            aria-label="Close navigation"
+            aria-label="بستن ناوبری"
             className="rounded-lg p-1.5 text-ink-3 hover:bg-surface-2 hover:text-ink"
           >
-            <ArrowLeft className="size-4" />
+            <ArrowRight className="size-4" />
           </button>
         </div>
         <div className="flex-1 overflow-y-auto px-2.5 py-2">

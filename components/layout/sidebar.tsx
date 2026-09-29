@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChevronRight } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import { useApp } from "@/lib/store";
 import { cn } from "@/lib/utils";
 import { NAV } from "@/components/layout/nav";
@@ -103,10 +103,10 @@ export function WorkspaceChip({ collapsed }: { collapsed?: boolean }) {
               {settings.businessName}
             </span>
             <span className="block text-[10.5px] text-ink-3">
-              {appointmentData.length} appointments · NexaBooking
+              {appointmentData.length} نوبت · NexaBooking
             </span>
           </span>
-          <ChevronRight className="size-3.5 text-ink-3" />
+          <ChevronLeft className="size-3.5 text-ink-3" />
         </>
       )}
     </div>
@@ -118,7 +118,7 @@ export function Sidebar({ collapsed }: { collapsed: boolean }) {
   return (
     <aside
       className={cn(
-        "fixed inset-y-0 left-0 z-30 hidden flex-col border-r border-edge bg-bg-soft/80 lg:flex",
+        "fixed inset-y-0 right-0 z-30 hidden flex-col border-r border-edge bg-bg-soft/80 lg:flex",
         collapsed ? "w-[68px]" : "w-[240px]"
       )}
     >
@@ -137,14 +137,14 @@ export function Sidebar({ collapsed }: { collapsed: boolean }) {
             collapsed && "justify-center px-0"
           )}
         >
-          <Avatar name={profile.name || "Ali"} color="#55a1ff" size="sm" />
+          <Avatar name={profile.name || "علی"} color="#55a1ff" size="sm" />
           {!collapsed && (
             <span className="min-w-0 flex-1">
               <span className="block truncate text-[12.5px] font-semibold text-ink">
-                {profile.name || "Ali Rezaei"}
+                {profile.name || "علی رضایی"}
               </span>
               <span className="block truncate text-[10.5px] text-ink-3">
-                {profile.role || "Operations Lead"}
+                {profile.role || "مدیر"}
               </span>
             </span>
           )}

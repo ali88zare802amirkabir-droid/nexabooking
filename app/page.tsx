@@ -9,7 +9,7 @@ import { EmptyState } from "@/components/ui/empty-state";
 import { Avatar } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 import { formatMoney } from "@/lib/utils";
-import { STATUS_TONE } from "@/components/booking/meta";
+import { STATUS_TONE, APPT_STATUS_FA } from "@/components/booking/meta";
 import { Button } from "@/components/ui/button";
 import { SimpleTrendChart } from "@/components/charts/trend";
 import { CountBarChart } from "@/components/charts/bars";
@@ -28,13 +28,13 @@ export default function OverviewPage() {
   const stats = appointmentStats();
 
   const revenueData = [
-    { month: "Mon", value: 1200 },
-    { month: "Tue", value: 1850 },
-    { month: "Wed", value: 980 },
-    { month: "Thu", value: 2400 },
-    { month: "Fri", value: 2100 },
-    { month: "Sat", value: 1600 },
-    { month: "Sun", value: 400 },
+    { month: "دوشنبه", value: 1200 },
+    { month: "سه‌شنبه", value: 1850 },
+    { month: "چهارشنبه", value: 980 },
+    { month: "پنج‌شنبه", value: 2400 },
+    { month: "جمعه", value: 2100 },
+    { month: "شنبه", value: 1600 },
+    { month: "یکشنبه", value: 400 },
   ];
 
   const openForm = (type: typeof formType) => { setFormType(type); setFormOpen(true); };
@@ -42,15 +42,15 @@ export default function OverviewPage() {
   return (
     <div className="flex flex-col gap-6">
       <PageHeader
-        title="Overview"
-        subtitle={`Welcome back — ${metrics.todayAppointments} appointments today, ${formatMoney(metrics.revenueToday)} revenue`}
+        title="نمای کلی"
+        subtitle={`خوش اومدی — امروز ${metrics.todayAppointments} نوبت، درآمد ${formatMoney(metrics.revenueToday)}`}
         actions={
           <div className="flex items-center gap-2">
             <Button size="sm" onClick={() => openForm("appointment")}>
-              <Plus className="mr-1.5 size-4" /> New Appointment
+              <Plus className="ms-1.5 size-4" /> نوبت جدید
             </Button>
             <Button variant="ghost" size="sm" onClick={() => openForm("customer")}>
-              <UserPlus className="mr-1.5 size-4" /> Add Customer
+              <UserPlus className="ms-1.5 size-4" /> مشتری جدید
             </Button>
           </div>
         }
@@ -58,14 +58,14 @@ export default function OverviewPage() {
 
       {/* KPI cards */}
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
-        {[
-          { label: "Today's Apps", value: metrics.todayAppointments.toString(), sub: "All statuses", icon: CalendarDays, tone: "accent" as const },
-          { label: "Upcoming", value: metrics.upcomingAppointments.toString(), sub: "Next 30 days", icon: CalendarDays, tone: "cyan" as const },
-          { label: "Completed", value: metrics.completedToday.toString(), sub: `${completionRate()}% rate`, icon: CheckCircle2, tone: "ok" as const },
-          { label: "No Shows", value: metrics.noShowsToday.toString(), sub: `${noShowRate()}% rate`, icon: XCircle, tone: "danger" as const },
-          { label: "Revenue", value: formatMoney(metrics.revenueToday), sub: `Wk ${formatMoney(revenueThisWeek())}`, icon: DollarSign, tone: "warn" as const },
-          { label: "New Cstm", value: metrics.newCustomers.toString(), sub: `Total ${metrics.totalCustomers}`, icon: UserPlus, tone: "accent" as const },
-        ].map((k) => (
+{[
+            { label: "نوبت‌های امروز", value: metrics.todayAppointments.toString(), sub: "همه وضعیت‌ها", icon: CalendarDays, tone: "accent" as const },
+            { label: "آینده", value: metrics.upcomingAppointments.toString(), sub: "۳۰ روز آینده", icon: CalendarDays, tone: "cyan" as const },
+            { label: "تکمیل‌شده", value: metrics.completedToday.toString(), sub: `نرخ ${completionRate()}%`, icon: CheckCircle2, tone: "ok" as const },
+            { label: "عدم حضور", value: metrics.noShowsToday.toString(), sub: `نرخ ${noShowRate()}%`, icon: XCircle, tone: "danger" as const },
+            { label: "درآمد", value: formatMoney(metrics.revenueToday), sub: `هفته ${formatMoney(revenueThisWeek())}`, icon: DollarSign, tone: "warn" as const },
+            { label: "مشتری جدید", value: metrics.newCustomers.toString(), sub: `مجموع ${metrics.totalCustomers}`, icon: UserPlus, tone: "accent" as const },
+          ].map((k) => (
           <div key={k.label} className="card p-4">
             <div className="flex items-center gap-2.5">
               <span className={`flex size-9 items-center justify-center rounded-xl bg-surface-2 ${k.tone === "ok" ? "text-ok" : k.tone === "danger" ? "text-danger" : k.tone === "warn" ? "text-warn" : k.tone === "cyan" ? "text-cyan" : "text-accent"}`}>
@@ -84,11 +84,11 @@ export default function OverviewPage() {
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2 card p-5">
           <div className="mb-4 flex items-center justify-between">
-            <h2 className="font-display text-base font-bold text-ink">Today's Schedule</h2>
-            <Link href="/appointments" className="text-[12px] text-accent hover:underline">View all →</Link>
+            <h2 className="font-display text-base font-bold text-ink">برنامه‌ی امروز</h2>
+            <Link href="/appointments" className="text-[12px] text-accent hover:underline">مشاهده همه ←</Link>
           </div>
           {sched.length === 0 ? (
-            <EmptyState icon={<CalendarDays className="size-5" />} title="No appointments today" />
+            <EmptyState icon={<CalendarDays className="size-5" />} title="امروز نوبتی نیست" />
           ) : (
             <div className="flex flex-col gap-2">
               {sched.map((a) => (
@@ -97,7 +97,7 @@ export default function OverviewPage() {
                   <Avatar name={a.customerId} color="#55a1ff" size="sm" />
                   <span className="min-w-0 flex-1 text-[13px] font-medium text-ink truncate">{a.customerId}</span>
                   <span className="hidden text-[11.5px] text-ink-3 sm:inline">{a.serviceId}</span>
-                  <span className={cn("rounded-full px-2 py-0.5 text-[10.5px] font-semibold", STATUS_TONE[a.status]?.cls)}>{a.status}</span>
+                  <span className={cn("rounded-full px-2 py-0.5 text-[10.5px] font-semibold", STATUS_TONE[a.status]?.cls)}>{APPT_STATUS_FA[a.status] ?? a.status}</span>
                 </Link>
               ))}
             </div>
@@ -105,29 +105,29 @@ export default function OverviewPage() {
         </div>
 
         <div className="card p-5">
-          <h2 className="mb-4 font-display text-base font-bold text-ink">Revenue Trend</h2>
+          <h2 className="mb-4 font-display text-base font-bold text-ink">روند درآمد</h2>
           <SimpleTrendChart data={revenueData} color="#55a1ff" />
         </div>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
         <div className="card p-5">
-          <h2 className="mb-4 font-display text-base font-bold text-ink">Appointment Stats</h2>
+          <h2 className="mb-4 font-display text-base font-bold text-ink">آمار نوبت‌ها</h2>
           <CountBarChart
             data={[
-              { label: "Confirmed", value: stats.confirmed, color: "#55a1ff" },
-              { label: "Completed", value: stats.completed, color: "#4ade80" },
-              { label: "Pending", value: stats.pending, color: "#fbbf24" },
-              { label: "Cancelled", value: stats.cancelled, color: "#f87171" },
-              { label: "No-show", value: stats.noShow, color: "#94a3b8" },
+              { label: "تأییدشده", value: stats.confirmed, color: "#55a1ff" },
+              { label: "تکمیل‌شده", value: stats.completed, color: "#4ade80" },
+              { label: "در انتظار", value: stats.pending, color: "#fbbf24" },
+              { label: "لغوشده", value: stats.cancelled, color: "#f87171" },
+              { label: "عدم حضور", value: stats.noShow, color: "#94a3b8" },
             ]}
           />
         </div>
 
         <div className="card p-5">
-          <h2 className="mb-4 font-display text-base font-bold text-ink">Upcoming</h2>
+          <h2 className="mb-4 font-display text-base font-bold text-ink">آینده</h2>
           {upcom.length === 0 ? (
-            <EmptyState icon={<CalendarDays className="size-5" />} title="No upcoming appointments" />
+            <EmptyState icon={<CalendarDays className="size-5" />} title="نوبت آتی وجود ندارد" />
           ) : (
             <div className="flex flex-col gap-2">
               {upcom.map((a) => (
@@ -144,7 +144,7 @@ export default function OverviewPage() {
 
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="card p-5">
-          <h2 className="mb-4 font-display text-base font-bold text-ink">Popular Services</h2>
+          <h2 className="mb-4 font-display text-base font-bold text-ink">خدمات پرطرفدار</h2>
           <div className="flex flex-col gap-2">
             {popServices.map(([name, count]) => (
               <div key={name} className="flex items-center justify-between text-[12.5px]">
@@ -155,23 +155,23 @@ export default function OverviewPage() {
           </div>
         </div>
         <div className="card p-5">
-          <h2 className="mb-4 font-display text-base font-bold text-ink">Staff Performance</h2>
+          <h2 className="mb-4 font-display text-base font-bold text-ink">عملکرد کارکنان</h2>
           <div className="flex flex-col gap-2">
             {perf.map((s) => (
               <div key={s.name} className="flex items-center justify-between text-[12.5px]">
                 <span className="text-ink">{s.name}</span>
-                <span className="text-ink-2">{s.completed} done · {formatMoney(s.revenue)}</span>
+                <span className="text-ink-2">{s.completed} انجام · {formatMoney(s.revenue)}</span>
               </div>
             ))}
           </div>
         </div>
         <div className="card p-5">
-          <h2 className="mb-4 font-display text-base font-bold text-ink">Customer Growth</h2>
+          <h2 className="mb-4 font-display text-base font-bold text-ink">رشد مشتریان</h2>
           <div className="flex flex-col gap-2">
             {growth.map((g) => (
               <div key={g.label} className="flex items-center justify-between text-[12.5px]">
                 <span className="text-ink">{g.label}</span>
-                <span className="font-semibold text-ink-2">{g.count} new</span>
+                <span className="font-semibold text-ink-2">{g.count} جدید</span>
               </div>
             ))}
           </div>
@@ -179,17 +179,17 @@ export default function OverviewPage() {
       </div>
 
       <div className="card p-5">
-        <h2 className="mb-4 font-display text-base font-bold text-ink">Quick Actions</h2>
+        <h2 className="mb-4 font-display text-base font-bold text-ink">اقدامات سریع</h2>
         <div className="flex flex-wrap gap-3">
-          <Button onClick={() => openForm("appointment")}><Plus className="mr-1.5 size-4" /> New Appointment</Button>
-          <Button variant="outline" onClick={() => openForm("customer")}><UserPlus className="mr-1.5 size-4" /> Add Customer</Button>
-          <Button variant="outline" onClick={() => openForm("service")}><Scissors className="mr-1.5 size-4" /> Add Service</Button>
-          <Button variant="outline" onClick={() => openForm("staff")}><Users className="mr-1.5 size-4" /> Add Staff</Button>
+          <Button onClick={() => openForm("appointment")}><Plus className="ms-1.5 size-4" /> نوبت جدید</Button>
+          <Button variant="outline" onClick={() => openForm("customer")}><UserPlus className="ms-1.5 size-4" /> مشتری جدید</Button>
+          <Button variant="outline" onClick={() => openForm("service")}><Scissors className="ms-1.5 size-4" /> خدمت جدید</Button>
+          <Button variant="outline" onClick={() => openForm("staff")}><Users className="ms-1.5 size-4" /> کارمند جدید</Button>
         </div>
       </div>
 
       {formOpen && (
-        <Modal open={formOpen} onClose={() => setFormOpen(false)} title="Add New">
+        <Modal open={formOpen} onClose={() => setFormOpen(false)} title="افزودن جدید">
           {formType === "appointment" && <AppointmentForm onClose={() => setFormOpen(false)} />}
           {formType === "customer" && <CustomerForm onClose={() => setFormOpen(false)} />}
           {formType === "service" && <ServiceForm onClose={() => setFormOpen(false)} />}

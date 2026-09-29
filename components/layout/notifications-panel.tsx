@@ -59,14 +59,14 @@ export function NotificationsPanel({
   return (
     <div
       ref={ref}
-      className="glass animate-scale-in absolute right-0 top-full z-40 mt-2 w-[min(92vw,22rem)] overflow-hidden rounded-2xl border-edge shadow-pop"
+      className="glass animate-scale-in absolute left-0 top-full z-40 mt-2 w-[min(92vw,22rem)] overflow-hidden rounded-2xl border-edge shadow-pop"
       role="dialog"
-      aria-label="Notifications"
+      aria-label="اعلان‌ها"
     >
       <div className="flex items-center justify-between border-b border-edge px-4 py-3">
         <div className="flex items-center gap-2">
           <BellRing className="size-4 text-accent" />
-          <p className="text-[13px] font-semibold text-ink">Notifications</p>
+          <p className="text-[13px] font-semibold text-ink">اعلان‌ها</p>
           {unread > 0 && (
             <span className="rounded-full bg-accent px-1.5 py-0.5 text-[10px] font-bold text-white">
               {unread}
@@ -79,14 +79,14 @@ export function NotificationsPanel({
           className="flex items-center gap-1 rounded-md px-2 py-1 text-[11.5px] font-medium text-ink-3 transition-colors hover:bg-surface-2 hover:text-ink"
         >
           <CheckCheck className="size-3.5" />
-          Mark all read
+          خواندن همه
         </button>
       </div>
 
       <div className="max-h-[min(420px,60vh)] overflow-y-auto p-1.5">
         {notifications.length === 0 && (
           <p className="px-4 py-10 text-center text-[12.5px] text-ink-3">
-            You're all caught up.
+            همه‌چیز به‌روز است.
           </p>
         )}
         {notifications.map((n) => {
@@ -98,7 +98,7 @@ export function NotificationsPanel({
               type="button"
               onClick={() => markNotificationRead(n.id)}
               className={cn(
-                "flex w-full items-start gap-3 rounded-xl px-2.5 py-2.5 text-left transition-colors hover:bg-surface-2/60",
+                "flex w-full items-start gap-3 rounded-xl px-2.5 py-2.5 text-right transition-colors hover:bg-surface-2/60",
                 !n.read && "bg-surface-2/50"
               )}
             >
@@ -116,7 +116,7 @@ export function NotificationsPanel({
                   {n.desc}
                 </span>
                 <span className="mt-1 block text-[10.5px] text-ink-3/70">
-                  {relMins(n.minsAgo)} ago
+                  {relMins(n.minsAgo)}
                 </span>
               </span>
               {!n.read && (

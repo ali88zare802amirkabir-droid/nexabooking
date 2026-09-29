@@ -2,10 +2,11 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowRight, Search } from "lucide-react";
+import { ArrowLeft, Search } from "lucide-react";
 import { useApp } from "@/lib/store";
 import { cn } from "@/lib/utils";
 import { Avatar } from "@/components/ui/avatar";
+import { CUSTOMER_STATUS_FA, APPT_STATUS_FA, CATEGORY_FA } from "@/components/booking/meta";
 import type { LucideIcon } from "lucide-react";
 
 interface ResultRow {
@@ -45,9 +46,9 @@ export function CommandSearch() {
     for (const c of customers) {
       push({
         id: c.id,
-        group: "Customers",
+        group: "مشتریان",
         title: c.name,
-        subtitle: `${c.email} · ${c.status}`,
+        subtitle: `${c.email} · ${CUSTOMER_STATUS_FA[c.status] ?? c.status}`,
         href: `/customers/${c.id}`,
         icon: Search,
         color: c.avatarColor,
@@ -57,9 +58,9 @@ export function CommandSearch() {
     for (const a of appointments) {
       push({
         id: a.id,
-        group: "Appointments",
+        group: "نوبت‌ها",
         title: `${a.customerId} — ${a.serviceId}`,
-        subtitle: `${a.date} ${a.startTime} · ${a.status}`,
+        subtitle: `${a.date} ${a.startTime} · ${APPT_STATUS_FA[a.status] ?? a.status}`,
         href: `/appointments`,
         icon: Search,
         color: "#55a1ff",
@@ -69,9 +70,9 @@ export function CommandSearch() {
     for (const s of services) {
       push({
         id: s.id,
-        group: "Services",
+        group: "خدمات",
         title: s.name,
-        subtitle: `${s.category} · ${s.price}$`,
+        subtitle: `${CATEGORY_FA[s.category] ?? s.category} · ${s.price}$`,
         href: "/services",
         icon: Search,
         color: "#f472b6",
@@ -81,7 +82,7 @@ export function CommandSearch() {
     for (const st of staffData) {
       push({
         id: st.id,
-        group: "Staff",
+        group: "کارکنان",
         title: st.name,
         subtitle: `${st.role} · ${st.department}`,
         href: "/staff",
@@ -157,7 +158,7 @@ export function CommandSearch() {
       <div
         role="dialog"
         aria-modal="true"
-        aria-label="Global search"
+        aria-label="جستجوی سراسری"
         className="card animate-rise relative w-full max-w-xl overflow-hidden"
         onKeyDown={onKeyDown}
       >
@@ -170,9 +171,9 @@ export function CommandSearch() {
               setQuery(e.target.value);
               setActive(0);
             }}
-            placeholder="Search customers, appointments, services, staff…"
+            placeholder="جستجوی مشتریان، نوبت‌ها، خدمات، کارکنان…"
             className="h-13 flex-1 bg-transparent py-3.5 text-[13.5px] text-ink placeholder:text-ink-3 focus:outline-none"
-            aria-label="Search"
+            aria-label="جستجو"
           />
           <kbd className="hidden rounded-md border border-edge bg-surface-2 px-1.5 py-0.5 text-[10px] font-medium text-ink-3 sm:block">
             ESC
@@ -181,8 +182,8 @@ export function CommandSearch() {
 
         {results.length === 0 ? (
           <div className="px-4 py-10 text-center">
-            <p className="text-sm font-medium text-ink">No results for “{query}”</p>
-            <p className="mt-1 text-[12px] text-ink-3">Try a name, SKU, invoice or project code.</p>
+            <p className="text-sm font-medium text-ink">نتیجه‌ای یافت نشد برای «{query}»</p>
+            <p className="mt-1 text-[12px] text-ink-3">نام، کد یا ایمیل را امتحان کنید.</p>
           </div>
         ) : (
           <div ref={listRef} className="max-h-[52vh] overflow-y-auto p-2">
@@ -204,7 +205,7 @@ export function CommandSearch() {
                         onClick={() => go(r)}
                         onMouseEnter={() => setActive(idx)}
                         className={cn(
-                          "flex w-full items-center gap-3 rounded-xl px-2.5 py-2 text-left transition-colors",
+                          "flex w-full items-center gap-3 rounded-xl px-2.5 py-2 text-right transition-colors",
                           activeRow ? "bg-surface-2" : "hover:bg-surface-2/60"
                         )}
                       >
@@ -217,7 +218,7 @@ export function CommandSearch() {
                             {r.subtitle}
                           </span>
                         </span>
-                        {activeRow && <ArrowRight className="size-3.5 text-accent" />}
+                        {activeRow && <ArrowLeft className="size-3.5 text-accent" />}
                       </button>
                     );
                   })}
@@ -229,13 +230,13 @@ export function CommandSearch() {
         <div className="flex items-center gap-4 border-t border-edge bg-surface-2/40 px-4 py-2.5 text-[10.5px] text-ink-3">
           <span className="flex items-center gap-1">
             <kbd className="rounded border border-edge bg-surface-2 px-1">↑</kbd>
-            <kbd className="rounded border border-edge bg-surface-2 px-1">↓</kbd> navigate
+            <kbd className="rounded border border-edge bg-surface-2 px-1">↓</kbd> پیمایش
           </span>
           <span className="flex items-center gap-1">
-            <kbd className="rounded border border-edge bg-surface-2 px-1">↵</kbd> open
+            <kbd className="rounded border border-edge bg-surface-2 px-1">↵</kbd> باز کردن
           </span>
-          <span className="ml-auto hidden sm:block">
-            {notifications.find((n) => !n.read) ? "Unread items are highlighted in the bell." : ""}
+          <span className="ms-auto hidden sm:block">
+            {notifications.find((n) => !n.read) ? "موارد خوانده‌نشده در زنگوله مشخص‌اند." : ""}
           </span>
         </div>
       </div>

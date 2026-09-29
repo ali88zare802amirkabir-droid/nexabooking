@@ -1,32 +1,27 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Sora } from "next/font/google";
+import { Vazirmatn } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/providers";
 import { AppShell } from "@/components/layout/app-shell";
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
-
-const sora = Sora({
-  subsets: ["latin"],
-  variable: "--font-sora",
+const vazir = Vazirmatn({
+  subsets: ["arabic", "latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-vazir",
   display: "swap",
 });
 
 export const metadata: Metadata = {
   title: {
-    default: "NexaBooking — Appointment Management",
-    template: "%s · NexaBooking",
+    default: "نکسابوکینگ — مدیریت نوبت‌دهی",
+    template: "%s · نکسابوکینگ",
   },
   description:
-    "NexaBooking is a polished appointment and booking management UI demo — a portfolio prototype covering calendar, appointments, customers, services, staff, payments and reporting.",
+    "نکسابوکینگ یک نمونه‌ی نمایشی فارسی برای مدیریت نوبت و رزرو است — تقویم، نوبت‌ها، مشتریان، خدمات، کارکنان، پرداخت‌ها و گزارش‌ها.",
   openGraph: {
-    title: "NexaBooking — Appointment Management",
+    title: "نکسابوکینگ — مدیریت نوبت‌دهی",
     description:
-      "A polished booking product UI demo: calendar, appointments, customers, services, staff, payments and reporting.",
+      "نمونه‌ی رابط کاربری فارسی محصول رزرو نوبت: تقویم، نوبت‌ها، مشتریان، خدمات، کارکنان، پرداخت‌ها و گزارش‌ها.",
     type: "website",
   },
 };
@@ -40,9 +35,10 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
-      lang="en"
+      lang="fa"
+      dir="rtl"
       suppressHydrationWarning
-      className={`${inter.variable} ${sora.variable}`}
+      className={vazir.variable}
     >
       <body>
         <script
